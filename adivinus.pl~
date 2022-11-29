@@ -1,0 +1,264 @@
+:-use_module(library(pce)).
+:-use_module(library(pce_style_item)).
+
+:-pce_image_directory('C:/Users/David Gpe/Documents/ITSSMT/7 semestre/IA/C4/Sistema Experto').
+:-pce_image_directory('C:/Users/David Gpe/Documents/ITSSMT/7 Semestre/IA/C4/Sistema Experto').
+
+resource(imagen1,image,image('adivina2.jpg')).
+resource(imagen23,image,image('compu2.jpg')).
+resource(imagen4,image,image('mascotas.jpg')).
+
+% proceso de eleccion de acuerdo al diagnostico basado en las preguntas
+% anteriores
+
+botones :- lim,
+	send(@boton,free),
+	send(@btncarrera,free),
+	resultado(Respuesta),
+	send(@texto,selection(' ')),
+	send(@respl,selection(Respuesta)),
+	new(@boton,button('RESULTADOS',message(@prolog,botones))),
+        send(Menu,display,@boton,point(40,50)),
+        send(Menu,display,@btncarrera,point(20,50)),
+limpiar.
+lim :- send(@respl, selection('')).
+
+:-
+        new(@menu, dialog('Adivinus')),
+        new(L,label(nombre,'Piensa en una mascota')),
+        new(Letrero,label(nombre2,'Tu mascota en un:')),
+        new(@etiquetaimg,label(nombre,resource(imagen1))),
+        new(@respl,label(nombre,'')),
+	new(Salir,button('Salir',and(message(@menu, destroy),message(@menu,free)))),
+	new(@boton,button('Comenzar',message(@prolog,botones))),
+        new(@boton2,button('Desarrolladores',and(message(@prolog,desarrolladores)))),
+
+        new(@texto,label(name,' ')),
+
+
+        new(@btncarrera,button('¿Diagnostico?')),
+	send(@menu,append(L)),
+        send(L,font,font(times,bold,20)),
+	send(@menu,append,Letrero),
+        send(Letrero,font,font(times,bold,20)),
+        send(@menu,append,@texto),
+        send(@texto,font,font(times,bold,20)),
+        send(@menu,append,@respl),
+        send(@respl,font,font(times,bold,20)),
+        send(@menu,append,@etiquetaimg),
+        send(@menu,append,@boton),
+        send(@menu,append,@boton2),
+        send(@menu,append,Salir),
+	send(@menu,open).
+
+desarrolladores:-
+    new(@ventanafinal,dialog('Acerca de')),
+    new(D,label(nombre,'Los encargados de este proyecto han sido:
+    Magally Macias Ramos
+    Edgar Jahir Viveros Garcia
+    David Guadalupe Maldonado')),
+    new(Etiquetaimg,label(nombre,resource(imagen23))),
+
+    send(@ventanafinal,append,Etiquetaimg),
+    send(@ventanafinal,append,D),
+    send(D,font,font(times,bold,14)),
+    send(@ventanafinal,open).
+
+
+resultado('Perro'):-perro,!.
+resultado('Gato'):-gato,!.
+resultado('Hamster'):-hamster,!.
+resultado('Conejo'):-conejo,!.
+resultado('Mono'):-mono,!.
+resultado('Huron'):-huron,!.
+resultado('Erizo'):-erizo,!.
+resultado('Cuyo'):-cuyo,!.
+resultado('Iguana'):-iguana,!.
+resultado('Camaleon'):-camaleon,!.
+resultado('Serpiente'):-serpiente,!.
+resultado('Tortuga'):-tortuga,!.
+resultado('Canario'):-canario,!.
+resultado('Tortola'):-tortola,!.
+resultado('Cotorro'):-cotorro,!.
+resultado('Pavo Real'):-pavo,!.
+resultado('Tarantula'):-tarantula,!.
+resultado('Escorpión'):-escorpion,!.
+resultado('Hormiga'):-hormiga,!.
+resultado('Rana o Sapo'):-sana,!.
+resultado('Pez'):-pez,!.
+resultado('Desconocido').
+
+perro:- smamifero,
+	pregunta('¿Tu mascota ladra?'),
+	pregunta('¿Tu mascota tiene buen olfato?'),
+	pregunta('¿Tu mascota come huesos?'),
+        pregunta('¿Tu mascota mueve la cola cuando esta feliz?'),
+        pregunta('¿Tu mascota se revuelca cuando lo bañas?'),
+        pregunta('¿Tu mascota te muerde cuando juegan?').
+gato:- smamifero,
+	pregunta('¿Tu mascota come ratones?'),
+	pregunta('¿Tu mascota es muy flexible?'),
+        pregunta('¿Tu mascota es carnivora?'),
+        pregunta('¿Tu mascota puede saltar muy alto?'),
+        pregunta('¿Cuando tu mascota salta siempre cae de pie?'),
+        pregunta('¿Tu mascota come ronronea?'),
+        pregunta('¿Tu mascota puede eriza su pelaje cuando se enoja?'),
+	pregunta('¿Tu mascota puede maullar?').
+hamster:-smamifero,
+        pregunta('¿Tu mascota puede almacenar alimento en sus abazones(mejillas)?'),
+        pregunta('¿Tu mascota tienen mucho pelo?'),
+        pregunta('¿Tu mascota se alimenta de cerales y semillas?'),
+        pregunta('¿Puedes tener a tu mascota en una jaula con una rueda caminadora?').
+conejo:-smamifero,
+        pregunta('¿En las caricaturas tu mascota come una zanahoria?'),
+        pregunta('¿Las patas traseras de tu mascota son mas grandes que las delanteras?'),
+        pregunta('¿Tu mascota puede dar saltos muy grandes?'),
+        pregunta('¿Tu mascota tiene una cola pequeña?'),
+        pregunta('¿Tu mascota tiene orejas grandes?'),
+        pregunta('¿Tu mascota es hervivora(come hierva)?').
+mono:-smamifero,
+        pregunta('¿Tu mascota come platano?'),
+        pregunta('¿La cola de tu mascota tiene el mismo tamaño que su cuerpo?'),
+        pregunta('¿Tu mascota tiene dedos pulgares?'),
+        pregunta('¿Tu mascota es omnivora(come frutas, verduras,carne, etc.)?'),
+        pregunta('¿Tu mascota tiene un pelaje corto?'),
+        pregunta('¿Tu mascota tiene extremidades largas?'),
+        pregunta('¿Tu mascota usa su cola para sostener objetos?').
+huron:-smamifero,
+        pregunta('¿Tu mascota tiene un cuerpo alargado?'),
+        pregunta('¿Tu mascota tiene extremidades cortas?'),
+        pregunta('¿Tu mascota es carnivora(come carne)?'),
+        pregunta('¿Tu mascota tiene un olor desagradable si no lo cuidas bien?'),
+        pregunta('¿Tu mascota descansa mucho tiempo?'),
+        pregunta('¿Tu mascota tiene cierto parentezco a los roedores?'),
+        pregunta('¿?').
+erizo:-smamifero,
+        pregunta('¿Tu mascota es insectivora(come insectos)?'),
+        pregunta('¿Tu mascota tiene el lomo cubierto de puas?'),
+        pregunta('¿Tu mascota puede socializar con perros y gatos?').
+cuyo:-smamifero,
+        pregunta('¿Tu mascota ronronea?').
+iguana:-reptil,
+        pregunta('¿Tu mascota es de color verde?'),
+        pregunta('¿Tu mascota posee patas cortas?'),
+        pregunta('¿Tu mascota tiene escamas dorsales(escamas sobre la espalda)?'),
+        pregunta('¿A tu mascota le cuelga la piel en el cuello?'),
+        pregunta('¿Tu mascota se mantiene inmovil por mucho tiempo?').
+camaleon:-reptil,
+        pregunta('Tu mascota puede cambiar de color'),
+        pregunta('¿Tu mascota tiene una lengua muy larga y pegajosa?'),
+        pregunta('¿Tu mascota come insectos?'),
+        pregunta('¿Tu mascota enrolla su cola?'),
+        pregunta('¿Tu mascota puede mover sus ojos independientemente del otro?').
+serpiente:-reptil,
+        pregunta('¿Tu mascota no posee patas?'),
+        pregunta('¿Tu mascota se arrastra para desplazarse?'),
+        pregunta('¿Tu mascota es venenosa?'),
+        pregunta('¿Tu masccota detecta el calor por medio de su lengua?'),
+        pregunta('¿Tu mascota cambia de piel constantemente?'),
+        pregunta('¿Tu mascota es ovipara(nacen de huevos)?').
+tortuga:-reptil,
+        pregunta('¿Tu mascota posee un caparazon?'),
+        pregunta('tu mascota puede meter su cabeza en su caparazon'),
+        pregunta('¿Tu mascota tiene una mortalidad muy larga?').
+canario:-ave,
+        pregunta('¿Tu mascota tiene plumas de color amarilo o blanco?'),
+        pregunta('¿En las caricaturas tu mascota dice que ha visto un lindo gatito?'),
+        pregunta('¿Tu mascota se alimenta de semillas?').
+tortola:-ave,
+        pregunta('¿Tu mascota posee plumas de color gris?'),
+        pregunta('¿Tu mascota es hervivora?'),
+        pregunta('¿Tu mascota era usada para transportar mensajes?').
+cotorro:-ave,
+        pregunta('¿Tu mascota tiene plumas de un color muy llamativo?'),
+        pregunta('¿Tu mascota posee un pico corto?'),
+        pregunta('¿Tu mascota se alimenta de semillas, raices y frutas?'),
+        pregunta('¿Tu mascota posee una lengua de color obscuro?').
+pavo:-ave,
+        pregunta('¿Tu mascota tiene un plumaje muy bonito?'),
+        pregunta('¿Tu mascota posee una cresta formada de plumas azules?'),
+        pregunta('¿Tu mascota es omnivora(come cualquier alimento)?'),
+        pregunta('¿Las plumas de tu mascota son de color verde, azul y negro?').
+tarantula:-artropodo,
+        pregunta('¿Tu mascota posee pelos en sus patas?'),
+        pregunta('¿Tu mascota es carnivora?'),
+        pregunta('¿Tu mascota es grande con respecto al resto de su especie?').
+escorpion:-artropodo,
+        pregunta('¿Tu mascota posee una cola con aguijon?'),
+        pregunta('¿Tu mascota posee dos pinzas?'),
+        pregunta('¿Tu mascota es muy flexible?'),
+        pregunta('¿Tu mascota es nocturna?'),
+        pregunta('¿En algunos paises se comen a tu mascota?').
+hormiga:-artropodo,
+        pregunta('¿Tu mascota vive debajo de la tierra?'),
+        pregunta('¿Tu mascota tiene antenas?'),
+        pregunta('¿Tu mascota puede cargar el doble de su peso?'),
+        pregunta('¿En el habitad de tu mascota se puede encontrar un lider(rey, reyna, etc)?'),
+        pregunta('¿Tu mascota es hervivora/carroñera(se alimenta de lo que encuentra)?').
+sana:-anfibio,
+        pregunta('¿Tu mascota puede dar saltos muy altos?'),
+        pregunta('¿Tu mascota posee membranas entre sus dedos?'),
+        pregunta('¿Tu mascota es carnivora?'),
+        pregunta('¿Tu mascota puede emitir algun canto o sonido?'),
+        pregunta('¿Tu mascota come insectos?').
+
+
+
+
+
+smamifero:-pregunta('¿Tu mascota es un mamifero?'),!.
+reptil:-pregunta('¿Tu mascota tiene la piel escamosa?'),!.
+ave:-pregunta('¿Tu mascota tiene plumas?'),!.
+artropodo:-pregunta('¿Tu mascota tiene muchas patas?'),!.
+anfibio:-pregunta('¿Tu mascota puede vivir tanto en el agua como en tierra?'),!.
+pez:-pregunta('¿Tu mascota solo puede vivir en el agua?'),!.
+
+
+:-dynamic si/1,no/1.
+preguntar(Problema):- new(Di,dialog('Responde con la verdad')),
+     new(L2,label(texto,resource(imagen4))),
+     new(La,label(prob,Problema)),
+     new(B1,button(si,and(message(Di,return,si)))),
+     new(B2,button(no,and(message(Di,return,no)))),
+
+         send(Di,append(L2)),
+	 send(Di,append(La)),
+         send(La,font,font(times,bold,20)),
+	 send(Di,append(B1)),
+	 send(Di,append(B2)),
+
+	 send(Di,default_button,si),
+	 send(Di,open_centered),get(Di,confirm,Answer),
+	 write(Answer),send(Di,destroy),
+	 ((Answer==si)->assert(si(Problema));
+	 assert(no(Problema)),fail).
+
+% cada vez que se conteste una pregunta la pantalla se limpia para
+% volver a preguntar
+
+pregunta(S):-(si(S)->true; (no(S)->fail; preguntar(S))).
+limpiar :- retract(si(_)),fail.
+limpiar :- retract(no(_)),fail.
+limpiar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
